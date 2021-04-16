@@ -31,7 +31,8 @@ public class SensorAcelerometro {
 						event.values[2];
 				if(factor > maxVel) {
 					activity.getWindow().getDecorView().setBackgroundColor(Color.RED);
-				} else {
+					//poner sonido
+						} else {
 					activity.getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 				}
 			}

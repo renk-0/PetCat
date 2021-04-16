@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class SensorProximidad {
 	Sensor sensor;
 	SensorEventListener listener;
-
+	//hola xD
 	public SensorProximidad(SensorManager manager, AppCompatActivity activity) {
 		sensor = manager.getDefaultSensor(sensor.TYPE_PROXIMITY);
 		if (sensor == null) {
