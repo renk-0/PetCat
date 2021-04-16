@@ -33,6 +33,7 @@ public class SensorProximidad {
 			public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 		};
 	}
+	//hola carl jsjs
 
 //HOla soy denzel xd
 	//hola carl jsjs
