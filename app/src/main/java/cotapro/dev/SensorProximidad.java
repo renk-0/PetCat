@@ -32,6 +32,7 @@ public class SensorProximidad {
 			public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 		};
 	}
+	//hola carl jsjs
 
 	public void start(SensorManager manager) {
 		if(!manager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL)) {
