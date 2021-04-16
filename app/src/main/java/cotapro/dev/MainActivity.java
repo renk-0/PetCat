@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     SensorManager sensorManager;
     SensorProximidad proximidad;
     SensorAcelerometro acelerometro;
+    SensorLuz luz;
     private boolean isTouch = false;
 
     @Override
@@ -21,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         proximidad = new SensorProximidad(sensorManager, this);
         acelerometro = new SensorAcelerometro(sensorManager, this);
+        luz= new SensorLuz(sensorManager, this);
+        luz.start(sensorManager);
         proximidad.start(sensorManager);
         acelerometro.start(sensorManager);
     }
@@ -29,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         proximidad.stop(sensorManager);
         acelerometro.stop(sensorManager);
+        luz.stop(sensorManager);
         super.onPause();
     }
 
@@ -56,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         proximidad.start(sensorManager);
         acelerometro.start(sensorManager);
+        luz.start(sensorManager);
         super.onResume();
     }
 }
