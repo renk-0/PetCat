@@ -35,7 +35,7 @@ public class SensorAcelerometro {
 					activity.getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 				}
 			}
-
+//COMENTARIO DE XIMENA
 			@Override
 			public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
