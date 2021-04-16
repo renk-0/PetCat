@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
             case MotionEvent.ACTION_UP:
                 this.getWindow().getDecorView().setBackgroundColor(Color.BLUE);
+                isTouch = false;
                 break;
         }
         return true;
