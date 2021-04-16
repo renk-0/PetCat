@@ -16,6 +16,7 @@ public class SensorAcelerometro {
 	Sensor sensor;
 	SensorEventListener listener;
 	float maxVel =  28.5f;
+	//menos que tres <3
 
 	public SensorAcelerometro(SensorManager manager, AppCompatActivity activity) {
 		sensor = manager.getDefaultSensor(sensor.TYPE_ACCELEROMETER);
@@ -35,7 +36,7 @@ public class SensorAcelerometro {
 					activity.getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 				}
 			}
-
+//COMENTARIO DE XIMENA
 			@Override
 			public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
