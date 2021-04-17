@@ -6,34 +6,42 @@ import android.graphics.Color;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     SensorManager sensorManager;
-    SensorProximidad proximidad;
+    Thread sensorThread;
     SensorAcelerometro acelerometro;
-    SensorLuz luz;
+    boolean ocupado = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        proximidad = new SensorProximidad(sensorManager, this);
+        sensorThread = new Thread(this::running);
         acelerometro = new SensorAcelerometro(sensorManager, this);
-        luz= new SensorLuz(sensorManager, this);
-        luz.start(sensorManager);
-        proximidad.start(sensorManager);
-        acelerometro.start(sensorManager);
+        acelerometro.reg();
+        sensorThread.start();
+    }
+
+    public void running() {
+        while (true) {
+            if(!acelerometro.run()) continue;
+        }
     }
 
     @Override
     protected void onPause() {
-        proximidad.stop(sensorManager);
-        acelerometro.stop(sensorManager);
-        luz.stop(sensorManager);
+        acelerometro.unreg();
         super.onPause();
     }
+
+    @Override
+    protected void onResume() {
+        acelerometro.reg();
+        super.onResume();
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event){
         int eventaction = event.getAction();
@@ -48,13 +56,5 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return true;
-    }
-
-    @Override
-    protected void onResume() {
-        proximidad.start(sensorManager);
-        acelerometro.start(sensorManager);
-        luz.start(sensorManager);
-        super.onResume();
     }
 }

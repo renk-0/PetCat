@@ -13,37 +13,44 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Locale;
 
 public class SensorAcelerometro {
+	SensorManager manager;
 	Sensor sensor;
+	MainActivity activity;
 	SensorEventListener listener;
 	float maxVel =  28.5f;
+	float velX, velY, velZ;
 
-	public SensorAcelerometro(SensorManager manager, AppCompatActivity activity) {
+	public SensorAcelerometro(SensorManager manager, MainActivity activity) {
+		this.activity = activity;
+		this.manager = manager;
 		sensor = manager.getDefaultSensor(sensor.TYPE_ACCELEROMETER);
-		if(sensor == null) {
-			activity.finish();
-			throw new RuntimeException("Error al conseguir el sensor de acelerometro");
-		}
+		velX = velY = velZ = 0;
 		listener = new SensorEventListener() {
 			@Override
 			public void onSensorChanged(SensorEvent event) {
-				float factor = event.values[0] +
-						event.values[1] +
-						event.values[2];
-				if(factor > maxVel) {
-					activity.getWindow().getDecorView().setBackgroundColor(Color.RED);
-				}
+				velX = event.values[0];
+				velY = event.values[1];
+				velZ = event.values[2];
 			}
 			@Override
-			public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-			}
+			public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 		};
 	}
-	public void start(SensorManager manager) {
-		manager.registerListener(listener, sensor, 2000*1000);
+
+	public boolean run() {
+		float factor = velX + velY + velZ;
+		if(factor > maxVel) {
+			activity.getWindow().getDecorView().setBackgroundColor(Color.RED);
+			return false;
+		}
+		return true;
 	}
 
-	public void stop(SensorManager manager) {
+	public void reg() {
+		manager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+	}
+
+	public void unreg() {
 		manager.unregisterListener(listener);
 	}
 }
