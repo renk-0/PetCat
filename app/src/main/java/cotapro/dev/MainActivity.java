@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     Thread sensorThread;
     Pantalla screen;
     SensorAcelerometro acelerometro;
+    SensorLuz luminancia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,26 +22,31 @@ public class MainActivity extends AppCompatActivity {
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorThread = new Thread(this::running);
         acelerometro = new SensorAcelerometro(this);
+        luminancia = new SensorLuz(this);
         runOnUiThread(screen);
         acelerometro.reg();
+        luminancia.reg();
         sensorThread.start();
     }
 
     public void running() {
         while (true) {
             if(!acelerometro.run()) continue;
+            if(!luminancia.run()) continue;
         }
     }
 
     @Override
     protected void onPause() {
         acelerometro.unreg();
+        luminancia.unreg();
         super.onPause();
     }
 
     @Override
     protected void onResume() {
         acelerometro.reg();
+        luminancia.reg();
         super.onResume();
     }
 

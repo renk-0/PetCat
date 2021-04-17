@@ -47,9 +47,7 @@ public class SensorAcelerometro {
 		return true;
 	}
 
-	public void reg() {
-		manager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
-	}
+	public void reg() { manager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL); }
 
 	public void unreg() {
 		manager.unregisterListener(listener);
