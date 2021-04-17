@@ -25,7 +25,6 @@ public class SensorLuz {
             public void onSensorChanged(SensorEvent event) {
                 if(event.values[0] < sensor.getMaximumRange()) {
                     activity.getWindow().getDecorView().setBackgroundColor(Color.GREEN);
-                    activity.ocupado = true;
                 }
 			}
             @Override

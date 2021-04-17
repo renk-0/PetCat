@@ -20,9 +20,9 @@ public class SensorAcelerometro {
 	float maxVel =  28.5f;
 	float velX, velY, velZ;
 
-	public SensorAcelerometro(SensorManager manager, MainActivity activity) {
+	public SensorAcelerometro(MainActivity activity) {
 		this.activity = activity;
-		this.manager = manager;
+		this.manager = activity.sensorManager;
 		sensor = manager.getDefaultSensor(sensor.TYPE_ACCELEROMETER);
 		velX = velY = velZ = 0;
 		listener = new SensorEventListener() {
@@ -40,7 +40,8 @@ public class SensorAcelerometro {
 	public boolean run() {
 		float factor = velX + velY + velZ;
 		if(factor > maxVel) {
-			activity.getWindow().getDecorView().setBackgroundColor(Color.RED);
+			activity.screen.current_color = Color.RED;
+			activity.runOnUiThread(activity.screen);
 			return false;
 		}
 		return true;

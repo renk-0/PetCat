@@ -10,16 +10,18 @@ import android.view.MotionEvent;
 public class MainActivity extends AppCompatActivity {
     SensorManager sensorManager;
     Thread sensorThread;
+    Pantalla screen;
     SensorAcelerometro acelerometro;
-    boolean ocupado = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        screen = new Pantalla(this);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorThread = new Thread(this::running);
-        acelerometro = new SensorAcelerometro(sensorManager, this);
+        acelerometro = new SensorAcelerometro(this);
+        runOnUiThread(screen);
         acelerometro.reg();
         sensorThread.start();
     }
@@ -48,11 +50,13 @@ public class MainActivity extends AppCompatActivity {
 
         switch (eventaction) {
             case MotionEvent.ACTION_DOWN:
-                this.getWindow().getDecorView().setBackgroundColor(Color.GREEN);
+                screen.current_color = Color.GREEN;
+                runOnUiThread(screen);
                 break;
 
             case MotionEvent.ACTION_UP:
-                this.getWindow().getDecorView().setBackgroundColor(Color.BLUE);
+                screen.current_color = Color.BLUE;
+                runOnUiThread(screen);
                 break;
         }
         return true;
