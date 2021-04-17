@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    @Override
     public boolean onTouchEvent(MotionEvent event){
         int X = (int) event.getX();
         int Y = (int) event.getY();
@@ -53,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return true;
-
     }
 
     @Override

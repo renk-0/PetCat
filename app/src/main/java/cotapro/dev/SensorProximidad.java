@@ -24,7 +24,6 @@ public class SensorProximidad {
 			public void onSensorChanged(SensorEvent event) {
 				if (event.values[0] < sensor.getMaximumRange()) {
 					activity.getWindow().getDecorView().setBackgroundColor(Color.BLACK);
-					//Hola
 				} else {
 					activity.getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 				}
@@ -33,9 +32,8 @@ public class SensorProximidad {
 			public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 		};
 	}
-	//hola carl jsjs
 
-//HOla soy denzel xd
+	//HOla soy denzel xd
 	//hola carl jsjs
   
 	public void start(SensorManager manager) {
