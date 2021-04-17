@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 public class SensorLuz {
     Sensor sensor;
     SensorEventListener listener;
-    boolean active = false;
     public SensorLuz(SensorManager manager, AppCompatActivity activity)
     {
         sensor=manager.getDefaultSensor(sensor.TYPE_LIGHT);
@@ -24,16 +23,10 @@ public class SensorLuz {
         listener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
-                if(event.values[0]<sensor.getMaximumRange()){
-                    boolean active = true;
+                if(event.values[0] < sensor.getMaximumRange()){
                     activity.getWindow().getDecorView().setBackgroundColor(Color.GREEN);
-                }else
-                {
-                    boolean active = false;
-                    activity.getWindow().getDecorView().setBackgroundColor(Color.BLUE);
-                }
-            }
-
+                }           
+			}
             @Override
             public void onAccuracyChanged(Sensor sensor, int accuracy) { }
         };

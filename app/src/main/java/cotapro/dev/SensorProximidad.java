@@ -26,9 +26,6 @@ public class SensorProximidad {
 				if (event.values[0] < sensor.getMaximumRange()) {
 					boolean active = true;
 					activity.getWindow().getDecorView().setBackgroundColor(Color.BLACK);
-				} else {
-					boolean active = false;
-					activity.getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 				}
 			}
 			@Override
@@ -36,8 +33,7 @@ public class SensorProximidad {
 		};
 	}
 	//hola carl jsjs
-
-//HOla soy denzel xd
+	//HOla soy denzel xd
 	//hola carl jsjs
   
 	public void start(SensorManager manager) {

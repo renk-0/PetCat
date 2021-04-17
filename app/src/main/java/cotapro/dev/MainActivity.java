@@ -13,7 +13,6 @@ public class MainActivity extends AppCompatActivity {
     SensorProximidad proximidad;
     SensorAcelerometro acelerometro;
     SensorLuz luz;
-    private boolean isTouch = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,23 +36,18 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     public boolean onTouchEvent(MotionEvent event){
-        int X = (int) event.getX();
-        int Y = (int) event.getY();
         int eventaction = event.getAction();
 
         switch (eventaction) {
             case MotionEvent.ACTION_DOWN:
                 this.getWindow().getDecorView().setBackgroundColor(Color.GREEN);
-                isTouch = true;
                 break;
 
             case MotionEvent.ACTION_UP:
                 this.getWindow().getDecorView().setBackgroundColor(Color.BLUE);
-                isTouch = false;
                 break;
         }
         return true;
-
     }
 
     @Override
