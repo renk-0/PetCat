@@ -6,61 +6,59 @@ import android.graphics.Color;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     SensorManager sensorManager;
-    SensorProximidad proximidad;
+    Thread sensorThread;
+    Pantalla screen;
     SensorAcelerometro acelerometro;
-    SensorLuz luz;
-    private boolean isTouch = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        screen = new Pantalla(this);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        proximidad = new SensorProximidad(sensorManager, this);
-        acelerometro = new SensorAcelerometro(sensorManager, this);
-        luz= new SensorLuz(sensorManager, this);
-        luz.start(sensorManager);
-        proximidad.start(sensorManager);
-        acelerometro.start(sensorManager);
+        sensorThread = new Thread(this::running);
+        acelerometro = new SensorAcelerometro(this);
+        runOnUiThread(screen);
+        acelerometro.reg();
+        sensorThread.start();
+    }
+
+    public void running() {
+        while (true) {
+            if(!acelerometro.run()) continue;
+        }
     }
 
     @Override
     protected void onPause() {
-        proximidad.stop(sensorManager);
-        acelerometro.stop(sensorManager);
-        luz.stop(sensorManager);
+        acelerometro.unreg();
         super.onPause();
     }
 
     @Override
+    protected void onResume() {
+        acelerometro.reg();
+        super.onResume();
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent event){
-        int X = (int) event.getX();
-        int Y = (int) event.getY();
         int eventaction = event.getAction();
 
         switch (eventaction) {
             case MotionEvent.ACTION_DOWN:
-                this.getWindow().getDecorView().setBackgroundColor(Color.GREEN);
-                isTouch = true;
+                screen.current_color = Color.GREEN;
+                runOnUiThread(screen);
                 break;
 
             case MotionEvent.ACTION_UP:
-                this.getWindow().getDecorView().setBackgroundColor(Color.BLUE);
-                isTouch = false;
+                screen.current_color = Color.BLUE;
+                runOnUiThread(screen);
                 break;
         }
         return true;
-    }
-
-    @Override
-    protected void onResume() {
-        proximidad.start(sensorManager);
-        acelerometro.start(sensorManager);
-        luz.start(sensorManager);
-        super.onResume();
     }
 }
