@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class SensorProximidad {
 	Sensor sensor;
 	SensorEventListener listener;
+	boolean active = false;
 
 	public SensorProximidad(SensorManager manager, AppCompatActivity activity) {
 		sensor = manager.getDefaultSensor(sensor.TYPE_PROXIMITY);
@@ -23,13 +24,10 @@ public class SensorProximidad {
 			@Override
 			public void onSensorChanged(SensorEvent event) {
 				if (event.values[0] < sensor.getMaximumRange()) {
+					boolean active = true;
 					activity.getWindow().getDecorView().setBackgroundColor(Color.BLACK);
-<<<<<<< HEAD
-					//pongo el sonido
-=======
-					//Hola
->>>>>>> origin/dev
 				} else {
+					boolean active = false;
 					activity.getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 				}
 			}

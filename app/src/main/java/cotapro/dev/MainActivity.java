@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         luz.stop(sensorManager);
         super.onPause();
     }
-
+    @Override
     public boolean onTouchEvent(MotionEvent event){
         int X = (int) event.getX();
         int Y = (int) event.getY();
