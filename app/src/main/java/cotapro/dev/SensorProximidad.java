@@ -10,39 +10,37 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SensorProximidad {
+	SensorManager manager;
+	MainActivity activity;
 	Sensor sensor;
 	SensorEventListener listener;
-	boolean active = false;
+	float distancia;
 
-	public SensorProximidad(SensorManager manager, AppCompatActivity activity) {
+	public SensorProximidad(MainActivity activity) {
+		this.activity = activity;
+		this.manager = activity.sensorManager;
 		sensor = manager.getDefaultSensor(sensor.TYPE_PROXIMITY);
-		if (sensor == null) {
-			activity.finish();
-			throw new RuntimeException("Error al conseguir el sensor");
-		}
 		listener = new SensorEventListener() {
 			@Override
 			public void onSensorChanged(SensorEvent event) {
-				if (event.values[0] < sensor.getMaximumRange()) {
-					boolean active = true;
-					activity.getWindow().getDecorView().setBackgroundColor(Color.BLACK);
-				}
+				distancia = event.values[0];
 			}
 			@Override
 			public void onAccuracyChanged(Sensor sensor, int accuracy) {}
-		};
-	}
-	//hola carl jsjs
-	//HOla soy denzel xd
-	//hola carl jsjs
-  
-	public void start(SensorManager manager) {
-		if(!manager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL)) {
-			Log.d("Mal", "Muy mal");
+			};
 		}
+	public boolean run(){
+		if (distancia < sensor.getMaximumRange()) {
+			activity.screen.current_color = Color.BLACK;
+			activity.runOnUiThread(activity.screen);
+			return false;
+		}
+		return true;
 	}
-
-	public void stop(SensorManager manager) {
+	public void reg() {
+		manager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+	}
+	public void unreg() {
 		manager.unregisterListener(listener);
 	}
 }

@@ -15,4 +15,5 @@ public class Pantalla implements Runnable {
 	public void run() {
 		activity.getWindow().getDecorView().setBackgroundColor(current_color);
 	}
+
 }
