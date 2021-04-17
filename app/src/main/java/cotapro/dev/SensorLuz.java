@@ -12,31 +12,40 @@ import androidx.appcompat.app.AppCompatActivity;
 public class SensorLuz {
     Sensor sensor;
     SensorEventListener listener;
-    public SensorLuz(SensorManager manager, MainActivity activity)
-    {
-        sensor=manager.getDefaultSensor(sensor.TYPE_LIGHT);
-        if(sensor==null)
-        {
+    MainActivity activity;
+    SensorManager manager;
+    float lumenes = 0;
+
+    public SensorLuz(MainActivity activity) {
+        this.activity = activity;
+        this.manager = activity.sensorManager;
+        sensor = manager.getDefaultSensor(sensor.TYPE_LIGHT);
+        if(sensor == null) {
             activity.finish();
             throw new RuntimeException("Error al conseguir el sensor");
         }
         listener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
-                if(event.values[0] < sensor.getMaximumRange()) {
-                    activity.getWindow().getDecorView().setBackgroundColor(Color.GREEN);
-                }
+                lumenes = event.values[0];
 			}
             @Override
             public void onAccuracyChanged(Sensor sensor, int accuracy) { }
         };
-
-    }
-    public void start(SensorManager manager) {
-        manager.registerListener(listener, sensor, 2000*1000);
     }
 
-    public void stop(SensorManager manager) {
+    public boolean run() {
+        if(lumenes > sensor.getMaximumRange()) {
+            activity.screen.current_color = Color.GREEN;
+            activity.runOnUiThread(activity.screen);
+            return false;
+        }
+        return true;
+    }
+
+    public void reg() { manager.registerListener(listener, sensor, 2000*1000); }
+
+    public void unreg() {
         manager.unregisterListener(listener);
     }
 }

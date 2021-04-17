@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     Pantalla screen;
     SensorAcelerometro acelerometro;
     SensorProximidad proximidad;
+    SensorLuz luminancia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
         sensorThread = new Thread(this::running);
         acelerometro = new SensorAcelerometro(this);
         proximidad = new SensorProximidad(this);
-        runOnUiThread(screen);
-        acelerometro.reg();
         proximidad.reg();
+        luminancia = new SensorLuz(this);
+        luminancia.reg();
         sensorThread.start();
     }
 
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         while (true) {
             if(!acelerometro.run()) continue;
             if(!proximidad.run()) continue;
+            if(!luminancia.run()) continue;
         }
 
     }
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         proximidad.unreg();
         acelerometro.unreg();
+        luminancia.unreg();
         super.onPause();
     }
 
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         proximidad.reg();
         acelerometro.reg();
+        luminancia.reg();
         super.onResume();
     }
 
