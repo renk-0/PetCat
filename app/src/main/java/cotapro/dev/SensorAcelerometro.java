@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,12 +19,14 @@ public class SensorAcelerometro {
 	MainActivity activity;
 	SensorEventListener listener;
 	float maxVel =  28.5f;
+	MediaPlayer mp;
 	float velX, velY, velZ;
 
 	public SensorAcelerometro(MainActivity activity) {
 		this.activity = activity;
 		this.manager = activity.sensorManager;
 		sensor = manager.getDefaultSensor(sensor.TYPE_ACCELEROMETER);
+		mp = MediaPlayer.create(activity, R.raw.gatomareado);
 		velX = velY = velZ = 0;
 		listener = new SensorEventListener() {
 			@Override
@@ -42,6 +45,7 @@ public class SensorAcelerometro {
 		if(factor > maxVel) {
 			activity.screen.mareo();
 			activity.runOnUiThread(activity.screen);
+			mp.start();
 			return false;
 		}
 		return true;

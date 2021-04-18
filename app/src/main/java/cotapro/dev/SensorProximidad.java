@@ -5,6 +5,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@ public class SensorProximidad {
 	SensorManager manager;
 	MainActivity activity;
 	Sensor sensor;
+	MediaPlayer mp;
 	SensorEventListener listener;
 	float distancia;
 
@@ -20,6 +22,7 @@ public class SensorProximidad {
 		this.activity = activity;
 		this.manager = activity.sensorManager;
 		sensor = manager.getDefaultSensor(sensor.TYPE_PROXIMITY);
+		mp = MediaPlayer.create(activity, R.raw.gatoasustado);
 		listener = new SensorEventListener() {
 			@Override
 			public void onSensorChanged(SensorEvent event) {
@@ -33,6 +36,7 @@ public class SensorProximidad {
 		if (distancia < sensor.getMaximumRange()) {
 			activity.screen.esconder();
 			activity.runOnUiThread(activity.screen);
+			mp.start();
 			return false;
 		}
 		return true;
