@@ -23,19 +23,27 @@ public class Pantalla implements Runnable {
 	public void ronroneo() {
 		transicionando = true;
 		gato_sprite = R.drawable.touch;
-		current_color = Color.GREEN;
+		//current_color = Color.GREEN;
 	}
 
 	public void enojo() {
 		transicionando = true;
 		gato_sprite = R.drawable.mentira;
-		current_color = Color.BLUE;
+		//current_color = Color.BLUE;
 	}
 
 	public void mareo() {
 		transicionando = true;
 		gato_sprite = R.drawable.agitar;
-		current_color = Color.RED;
+		//current_color = Color.RED;
+	}
+	public void esconder(){
+		transicionando = true;
+		gato_sprite = R.drawable.proxim;
+	}
+	public void luz(){
+		transicionando = true;
+		gato_sprite = R.drawable.luz;
 	}
 
 	private void transicionar() {
@@ -48,6 +56,6 @@ public class Pantalla implements Runnable {
 	public void run() {
 		if(!transicionando) return;
 		transicionar();
-		activity.getWindow().getDecorView().setBackgroundColor(current_color);
+		//activity.getWindow().getDecorView().setBackgroundColor(current_color);
 	}
 }
