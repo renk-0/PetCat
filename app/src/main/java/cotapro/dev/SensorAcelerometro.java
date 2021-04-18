@@ -40,7 +40,7 @@ public class SensorAcelerometro {
 	public boolean run() {
 		float factor = velX + velY + velZ;
 		if(factor > maxVel) {
-			activity.screen.current_color = Color.RED;
+			activity.screen.mareo();
 			activity.runOnUiThread(activity.screen);
 			return false;
 		}
