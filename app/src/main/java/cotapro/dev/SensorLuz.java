@@ -38,8 +38,8 @@ public class SensorLuz {
     }
 
     public boolean run() {
-        if(lumenes > 100) {
-            activity.screen.current_color = Color.GREEN;
+        if(lumenes > 200) {
+            activity.screen.luz();
             activity.runOnUiThread(activity.screen);
             mp.start();
             return false;

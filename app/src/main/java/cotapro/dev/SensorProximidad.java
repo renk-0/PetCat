@@ -34,7 +34,7 @@ public class SensorProximidad {
 		}
 	public boolean run(){
 		if (distancia < sensor.getMaximumRange()) {
-			activity.screen.current_color = Color.BLACK;
+			activity.screen.esconder();
 			activity.runOnUiThread(activity.screen);
 			mp.start();
 			return false;

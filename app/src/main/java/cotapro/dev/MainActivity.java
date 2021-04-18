@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void running() {
         while (true) {
-            if(!luminancia.run()) continue;
             if(!acelerometro.run()) continue;
             if(!proximidad.run()) continue;
+            if(!luminancia.run()) continue;
         }
     }
 
@@ -60,12 +60,12 @@ public class MainActivity extends AppCompatActivity {
 
         switch (eventaction) {
             case MotionEvent.ACTION_DOWN:
-                screen.current_color = Color.GREEN;
+                screen.ronroneo();
                 runOnUiThread(screen);
                 break;
 
             case MotionEvent.ACTION_UP:
-                screen.current_color = Color.BLUE;
+                screen.enojo();
                 runOnUiThread(screen);
                 break;
         }
