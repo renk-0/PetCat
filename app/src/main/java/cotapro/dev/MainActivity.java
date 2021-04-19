@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MotionEvent;
 
@@ -14,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     SensorAcelerometro acelerometro;
     SensorProximidad proximidad;
     SensorLuz luminancia;
+    MediaPlayer ronroneo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         luminancia = new SensorLuz(this);
         luminancia.reg();
         sensorThread.start();
+        ronroneo = MediaPlayer.create(this, R.raw.ronroneo);
     }
 
     public void running() {
@@ -60,11 +63,13 @@ public class MainActivity extends AppCompatActivity {
 
         switch (eventaction) {
             case MotionEvent.ACTION_DOWN:
+                ronroneo.start();
                 screen.ronroneo();
                 runOnUiThread(screen);
                 break;
 
             case MotionEvent.ACTION_UP:
+                ronroneo.pause();
                 screen.enojo();
                 runOnUiThread(screen);
                 break;

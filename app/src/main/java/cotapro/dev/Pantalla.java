@@ -1,6 +1,8 @@
 package cotapro.dev;
 
 import android.graphics.Color;
+import android.media.MediaPlayer;
+
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
