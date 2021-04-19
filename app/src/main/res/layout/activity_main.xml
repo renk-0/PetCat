@@ -4,4 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"/>
+    tools:context=".MainActivity">
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/gato"
+            android:src="@drawable/parpadeo"
+            />
+</androidx.constraintlayout.widget.ConstraintLayout>
